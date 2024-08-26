@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Batch {
+  id             String   @id @default(uuid())
+  gyle           String   @unique
+  dateBrewed     DateTime @default(now())
+  dateEmpty      DateTime @updatedAt
+  volumeWart     Int
+  volumePackaged Int
+  packaged20L    Int
+  packaged473ml  Int
+  packaged50L    Int
+  packaged60L    Int
+  productID      String
+  product        Product  @relation(fields: [productID], references: [id], onDelete: Restrict)
+}
+
+model Product {
+  id              String  @id @default(uuid())
+  name            String
+  productionTime  Int
+  inventory_20L   Int
+  inventory_473ml Int
+  available_20L   Boolean @default(false)
+  available_473ml Boolean @default(false)
+  orders          Order[]
+  batches         Batch[]
+}
+
+model Customer {
+  id                 String  @id @default(uuid())
+  name               String  @unique
+  contactName        String
+  contactEmail       String
+  contactPhoneNumber Int
+  streetAddress      String
+  city               String
+  province           String
+  postalCode         String
+  orders             Order[]
+}
+
+model Order {
+  id         String   @id @default(uuid())
+  poNumber   String   @unique
+  customerID String
+  productID  String
+  customer   Customer @relation(fields: [customerID], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productID], references: [id], onDelete: Restrict)
+}
