@@ -8,6 +8,9 @@ async function getProductName(productID: string) {
         },
     });
 
+    if (!product) {
+        throw new Error('Product not found!');
+    }
     return product;
 }
 
@@ -58,10 +61,10 @@ export default async function AdminDashboard() {
                     return (
                         <BatchesCard
                             key={batch.id}
-                            name={productName?.name || "Unknown Product"}
+                            name={productName.name}
                             gyle={batch.gyle}
                             dateBrewed={batch.dateBrewed}
-                            daysLeft={productName?.productionTime}
+                            daysLeft={productName.productionTime}
                         />
                     );
                     })}
