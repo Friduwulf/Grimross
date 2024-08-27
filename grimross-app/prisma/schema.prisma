@@ -14,7 +14,7 @@ model Batch {
   id             String   @id @default(uuid())
   gyle           String   @unique
   dateBrewed     DateTime @default(now())
-  dateEmpty      DateTime @updatedAt
+  isEmpty        Boolean  @default(false)
   volumeWart     Int
   volumePackaged Int
   packaged20L    Int
