@@ -42,11 +42,12 @@ model Customer {
   name               String  @unique
   contactName        String
   contactEmail       String
-  contactPhoneNumber Int
+  contactPhoneNumber String
   streetAddress      String
   city               String
   province           String
   postalCode         String
+  kegsOnHand         Int
   orders             Order[]
 }
 
