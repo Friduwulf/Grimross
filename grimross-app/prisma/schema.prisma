@@ -12,7 +12,7 @@ datasource db {
 
 model Batch {
   id             String   @id @default(uuid())
-  gyle           String   @unique
+  gyle           Int   @unique
   dateBrewed     DateTime @default(now())
   isEmpty        Boolean  @default(false)
   volumeWart     Int

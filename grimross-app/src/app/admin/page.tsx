@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import prisma from "@/db/db";
+import { formatNumber } from "@/lib/formatters";
 //Get a specific product by it's ID and returns an error message if no product is found
 async function getProduct(productID: string) {
     const product = await prisma.product.findUnique({
@@ -71,8 +72,8 @@ export default async function AdminDashboard() {
                         <InventoryCard
                             key={product.id}
                             name={product.name}
-                            kegInventory={product.inventory_20L || 0} //Gives inventory of 20L kegs, or 0 if there are none
-                            canInventory={product.inventory_473ml || 0} //Gives inventory of 473ml, or 0 if there are none
+                            kegInventory={formatNumber(product.inventory_20L || 0)} //Gives inventory of 20L kegs, or 0 if there are none
+                            canInventory={formatNumber(product.inventory_473ml || 0)} //Gives inventory of 473ml, or 0 if there are none
                         />
                     ))}
                 </div>
@@ -88,7 +89,7 @@ export default async function AdminDashboard() {
                         <BatchesCard
                             key={batch.id}
                             name={product.name}
-                            gyle={batch.gyle}
+                            gyle={`G${formatNumber(batch.gyle)}`}
                             dateBrewed={batch.dateBrewed}
                             daysLeft={product.productionTime} //How long the given product takes to produce on average
                         />
@@ -124,8 +125,8 @@ export default async function AdminDashboard() {
 
 type InventoryProps = {
     name: string
-    kegInventory: number
-    canInventory: number
+    kegInventory: string
+    canInventory: string
 }
 //A card that shows a quick look at the current inventory for each of the products
 function InventoryCard({name, kegInventory, canInventory}: 
