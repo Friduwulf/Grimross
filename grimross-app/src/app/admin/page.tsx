@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import prisma from "@/db/db";
 import { formatNumber } from "@/lib/formatters";
+
 //Get a specific product by it's ID and returns an error message if no product is found
 async function getProduct(productID: string) {
     const product = await prisma.product.findUnique({
@@ -49,6 +50,7 @@ async function getCustomerData() {
                 },
             }),
         ]);
+
         return {topCustomers, totalKegs: totalKegs._sum.kegsOnHand || 0};
     } catch (error) {
         console.error('Error fetching data:',error);

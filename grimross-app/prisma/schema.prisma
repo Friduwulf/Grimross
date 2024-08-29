@@ -15,8 +15,8 @@ model Batch {
   gyle           Int   @unique
   dateBrewed     DateTime @default(now())
   isEmpty        Boolean  @default(false)
-  volumeWart     Int
-  volumePackaged Int
+  volumeWart     Decimal
+  volumePackaged Decimal
   packaged20L    Int
   packaged473ml  Int
   packaged50L    Int
